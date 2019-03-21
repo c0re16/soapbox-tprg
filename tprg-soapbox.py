@@ -4,16 +4,7 @@ from math import radians
 data = []
 # file = str(input("FILENAME >>") or "soapboxes.csv")
 file = "soapboxes.csv"
-vi = 0
-a = 0
-vf = 0
-t = 0
-us = 0
-uk = 0
-n = 0
-fg = 0
-ff = 0
-m = 0
+
 g = 9.81
 ramplen = 0
 rampangle = 0
@@ -39,14 +30,21 @@ def vf_sq():
 		) 
 def fg(m):
 	return (m * 9.81)
-def accel(uk, theta):
+def accel(f):
 	return(
-		(9.81* math.sin(radians(theta))) - (uk*9.81*math.cos(radians(theta)))
+		f/m
+
 		)
 def framp(fg,theta):
 	return(
-		fg*math.cos(radians(theta))
+		fg*math.sin(radians(theta))
 		)
+def fframp(fg,theta,uk):
+	return(
+		fg*math.cos(radians(theta))*uk
+		)
+def normforce(m):
+	return (m * 9.81)
 def friction(us,framp):
 	return (us*framp)
 
@@ -61,33 +59,34 @@ tracklen = float(data[0][2])
 
 
 print(
-	"ramplen>>", ramplen, "		"
-	"rampangle>>", rampangle,"		"
-	"tracklen>>", tracklen,'\n')
+	"RAMP LENGTH>>", ramplen, "		"
+	"RAMP ANGLE>>", rampangle,"		"
+	"TRACK LENGTH>>", tracklen,'\n')
 	
 for i in range(1,len(data)):
 	m = float(data[i][0])
 	us = float(data[i][1])
 	uk = float(data[i][2])
-	print("MASS>>",m,"		STAT COEFF>>",us,"		KIN COEFF>>",uk)
-	if accel(us,rampangle) <= 0:
-		print("nah u aint movin\n")
+	print("MASS>>",m,"		STAT COEFF>>",us,chr(956),"		KIN COEFF>>",uk,chr(956))
+
+
+	fRampStatic = (framp(fg(m),rampangle)-fframp(fg(m),rampangle,us))
+	accel(fRampStatic)
+	if accel(fRampStatic) <= 0 :
+		print('not going anywhere')
 	else:
-		print("ya u boogyin")
-		print(
-			round(
-				accel(uk,rampangle)
-				,3)
-			,'m/s^2 acceleration')
+		print("going somewhere")
+		fRampKinetic = (framp(fg(m),rampangle)-fframp(fg(m),rampangle,uk))
+		aEndRamp = accel(fRampKinetic)
+		print(aEndRamp)
+		vEndRamp= math.sqrt(2 * aEndRamp * ramplen)
+		print(vEndRamp)
 
 
-		print(
-			round(
-				math.sqrt(
-					2*accel(uk,rampangle)*ramplen
-					)
-				,3)
-			,"m/s at end of ramp\n")
+
+
+
+
 		
 
 
