@@ -1,2 +1,2 @@
 # soapbox-tprog
-tprog soap box project
+tprg soap box project
