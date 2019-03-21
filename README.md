@@ -1,2 +1,2 @@
-# soapbox-tprog
+# soapbox-tprg
 tprg soap box project
