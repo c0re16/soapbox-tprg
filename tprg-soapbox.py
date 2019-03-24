@@ -2,8 +2,8 @@ import csv
 import math
 from math import radians
 data = []
-file = str(input("FILENAME >>") or "soapboxes.csv")
-
+#file = str(input("FILENAME >>") or "soapboxes.csv")
+file = "soapboxes.csv"
 
 g = 9.8
 ramplen = 0
@@ -32,10 +32,6 @@ def fframp(fg,theta,uk):
 	return(
 		fg*math.cos(radians(theta))*uk
 		)
-def normforce(m):
-	return (m * 9.8)
-def friction(us,framp):
-	return (us*framp)
 
 # </FUNKY STUFF>
 
@@ -56,7 +52,7 @@ for i in range(1,len(data)):
 	m = float(data[i][0])
 	us = float(data[i][1])
 	uk = float(data[i][2])
-	print("CAR #" , i ,"		MASS>>",m,"		STAT COEFF>>",us,chr(956),"		KIN COEFF>>",uk,chr(956))
+	print("CAR #" , i ,"	MASS>>",m,"	STAT COEFF>>",us,chr(956),"	KIN COEFF>>",uk,chr(956))
 
 
 	fRampStatic = (framp(fg(m),rampangle)-fframp(fg(m),rampangle,us))
@@ -66,22 +62,6 @@ for i in range(1,len(data)):
 	else:
 
 		print("STARTS TO ROLL")
-		# fRampKinetic = (framp(fg(m),rampangle)-fframp(fg(m),rampangle,uk))
-		# aEndRamp = accel(fRampKinetic)
-		# print(
-		# 	round(
-		# 		aEndRamp
-		# 		,4),'m/s^2 accel on ramp'
-		# 	)
-
-		# vEndRamp= math.sqrt(2 * aEndRamp * ramplen)
-
-		# print( 
-		# 	round(
-		# 		vEndRamp
-		# 		,4),'m/s at end of ramp'
-		# 	)
-
 
 		fgsin0 = fg(m)*math.sin(radians(rampangle))
 		fgcos0= fg(m)* math.cos(radians(rampangle))
@@ -116,8 +96,8 @@ for i in range(1,len(data)):
 		STOPdistance = (-TRACKvi**2)/(2*ACCELtrack)
 		
 		if STOPdistance <15:
-			print("DOESNT FINISH RACE\n")
-			print("Stop distance>>", round(STOPdistance,3),"m")
+			print("DOESNT FINISH RACE")
+			print("Stop distance>>", round(STOPdistance,3),"m\n")
 
 		else:
 			v15mtemp = TRACKvi**2 + (2 * (ACCELtrack) * tracklen)
